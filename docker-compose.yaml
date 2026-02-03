@@ -1,32 +1,51 @@
 services:
-  ollama:
-    volumes:
-      - ollama:/root/.ollama
-    container_name: ollama
-    pull_policy: always
-    tty: true
-    restart: unless-stopped
-    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
-
   open-webui:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
-    container_name: open-webui
+    container_name: AI-Chat
     volumes:
       - open-webui:/app/backend/data
-    depends_on:
-      - ollama
     ports:
       - ${OPEN_WEBUI_PORT-3000}:8080
     environment:
-      - 'OLLAMA_BASE_URL=http://ollama:11434'
-      - 'WEBUI_SECRET_KEY='
+      WEBUI_SECRET_KEY: "noCm364YWF0nXWmTHZzdXx661EbMWH0W"
+      CORS_ALLOW_ORIGIN: "http://localhost:3000"
+      TRUST_PROXY: "true"
+      ENABLE_SIGNUP: "true"
+      WEBUI_NAME: "AIM Chat"
+      WEBUI_DESCRIPTION: "Interne KI-Plattform der EFiS AG"
+      WEBUI_DEFAULT_THEME: "dark"
+      WEBUI_HIDE_FOOTER: "true"
+      WEBUI_SHOW_POWERED_BY: "false"
+
+      WEBUI_LOGO_URL: "/assets/ailogo.png"
+      WEBUI_FAVICON_URL: "/assets/favicon.ico"
+
+      ENABLE_MODEL_ARENA: "false"
+      ADMIN_EMAILS: "marius.mauer@paymentgroup.de"
+
+      ENABLE_OLLAMA: "false"
+      OPENAI_API_KEY: "rMpQuYt1vKuF064A8dxE83dP8iOFLbU9"
+      OPENAI_API_BASE_URL: "http://aim:8000/v1"
+
+      USER_AGENT: "AIM-Chat/1.0 (EFiS AG)"
+      TZ: "Europe/Berlin"
+      LOG_LEVEL: "info"
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
 
+  services:
+  searxng:
+    container_name: searxng
+    image: searxng/searxng:latest
+    ports:
+      - "3002:8080"
+    volumes:
+      - ./searxng:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8080/
+    restart: unless-stopped
 volumes:
-  ollama: {}
   open-webui: {}
