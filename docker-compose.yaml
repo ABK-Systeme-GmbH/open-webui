@@ -35,8 +35,6 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
-
-  services:
   searxng:
     container_name: searxng
     image: searxng/searxng:latest
