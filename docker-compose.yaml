@@ -18,9 +18,7 @@ services:
       WEBUI_DEFAULT_THEME: "dark"
       WEBUI_HIDE_FOOTER: "true"
       WEBUI_SHOW_POWERED_BY: "false"
-
-      WEBUI_LOGO_URL: "/assets/ailogo.png"
-      WEBUI_FAVICON_URL: "/assets/favicon.ico"
+      OPEN_WEBUI_PORT: "3080"
 
       ENABLE_MODEL_ARENA: "false"
       ADMIN_EMAILS: "marius.mauer@paymentgroup.de"
