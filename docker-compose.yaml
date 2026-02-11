@@ -19,7 +19,8 @@ services:
       WEBUI_DEFAULT_THEME: "dark"
       WEBUI_HIDE_FOOTER: "true"
       WEBUI_SHOW_POWERED_BY: "false"
-
+      ENABLE_EVALUATIONS: "false"
+      ENABLE_FEEDBACK: "false"
       ENABLE_MODEL_ARENA: "false"
       ADMIN_EMAILS: "marius.mauer@paymentgroup.de"
 
