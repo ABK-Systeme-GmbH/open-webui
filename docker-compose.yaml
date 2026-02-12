@@ -25,7 +25,7 @@ services:
 
       ENABLE_OLLAMA: "false"
       OPENAI_API_KEY: "rMpQuYt1vKuF064A8dxE83dP8iOFLbU9"
-      OPENAI_API_BASE_URL: "http://aim:8000/v1"
+      OPENAI_API_BASE_URL: "http://host.docker.internal:8000/v1"
 
       USER_AGENT: "AIM-Chat/1.0 (EFiS AG)"
       TZ: "Europe/Berlin"
