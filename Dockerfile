@@ -34,8 +34,6 @@ ENV DOCKER=true
 ENV SCARF_NO_ANALYTICS=true
 ENV DO_NOT_TRACK=true
 ENV ANONYMIZED_TELEMETRY=false
-# Verhindert, dass lokale Standard-Modelle geladen werden, falls nicht explizit gewünscht
-ENV ENABLE_RAG_LOCAL_WEB_SEARCH=false 
 
 WORKDIR /app/backend
 
@@ -58,14 +56,12 @@ RUN apt-get update && \
     ffmpeg libsm6 libxext6 zstd \
     && rm -rf /var/lib/apt/lists/*
 
-# 1. Python-Abhängigkeiten (Requirements zuerst für Caching)
+# 1. Python-Abhängigkeiten via uv (Nutzt deine requirements.txt)
 COPY backend/requirements.txt .
 RUN pip3 install --no-cache-dir uv && \
-    # Deine CPU-Optimierung (kein CUDA!)
-    pip3 install 'torch<=2.9.1' torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu --no-cache-dir && \
     uv pip install --system -r requirements.txt --no-cache-dir
 
-# 2. Backend-Code kopieren (Das hat vorher gefehlt!)
+# 2. Backend-Code kopieren
 COPY ./backend .
 
 # 3. Frontend-Build kopieren
