@@ -59,7 +59,7 @@ RUN apt-get update && \
 # 1. Python-Abhängigkeiten via uv (Nutzt deine requirements.txt)
 COPY backend/requirements.txt .
 RUN pip3 install --no-cache-dir uv && \
-    uv pip install --system -r requirements.txt --no-cache-dir
+    uv pip install --system -r requirements.txt --no-cache-dir --index-strategy unsafe-best-match
 
 # 2. Backend-Code kopieren
 COPY ./backend .
